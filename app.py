@@ -20,13 +20,13 @@ from linebot import (
     LineBotApi, WebhookHandler
 )
 
-app = Flask(__name__, static_url_path="/static")
+app = Flask(_name_, static_url_path="/static")
 
 UPLOAD_FOLDER ='static/uploads/'
 DOWNLOAD_FOLDER = 'static/downloads/'
 ALLOWED_EXTENSIONS = {'jpg', 'png','.jpeg'}
 
-lineaccesstoken = "RiXCJUh3oZa+/o8ix24EVj25zdzdudFDEYofu5oH888rbQu7SpuXGZ4hLsrxgdGJ7GpQyIV0OIIGaUEUxfXeahXuMvXjgT+zdjbBQboxyKsCyDf/v3pTsJMdjs9fN+TOEdA2FcWrGw9tvOC45XBrQQdB04t89/1O/w1cDnyilFU="
+lineaccesstoken = 'RiXCJUh3oZa+/o8ix24EVj25zdzdudFDEYofu5oH888rbQu7SpuXGZ4hLsrxgdGJ7GpQyIV0OIIGaUEUxfXeahXuMvXjgT+zdjbBQboxyKsCyDf/v3pTsJMdjs9fN+TOEdA2FcWrGw9tvOC45XBrQQdB04t89/1O/w1cDnyilFU='
 
 line_bot_api = LineBotApi(lineaccesstoken)
 
@@ -150,27 +150,27 @@ def event_handle(event,json_line):
     if msgType == "text":
         msg = str(event["message"]["text"])
         if msg == "สวัสดี":
-            replyObj = TextSendMessage(text="ดีด้วย")
-            line_bot_api.reply_message(rtoken,replyObj)
-        elif msg == "กินข้าวไหม":
-            replyObj = TextSendMessage(text="ไม่ล่ะ กินแล้ว")
-            line_bot_api.reply_message(rtoken,replyObj)
-        elif msg == "ไปเที่ยวกันไหม":
-            replyObj = TextSendMessage(text="ไปดิ")
-            line_bot_api.reply_message(rtoken,replyObj)
+            replyObj = TextSendMessage(text="ก็มาดิ ฮู้กๆ")
+            line_bot_api.reply_message(rtoken, replyObj)
+        elif msg == "ไปไหนดี":
+            replyObj = TextSendMessage(text="อยู่บ้านเถอะ")
+            line_bot_api.reply_message(rtoken, replyObj)
+        elif msg == "เหมียว":
+            replyObj = TextSendMessage(text="น้องแมว")
+            line_bot_api.reply_message(rtoken, replyObj)
         elif msg == "covid" :
             url = "https://covid19.ddc.moph.go.th/api/Cases/today-cases-all"
             response = requests.get(url)
             response = response.json()
             replyObj = TextSendMessage(text=str(response))
-            line_bot_api.reply_message(rtoken, replyObj)   
+            line_bot_api.reply_message(rtoken, replyObj)
         else :
             headers = request.headers
             json_headers = ({k:v for k, v in headers.items()})
             json_headers.update({'Host':'bots.dialogflow.com'})
             url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/efdb8f5c-1118-491d-ad3a-1d73d4b4f444"
             requests.post(url,data=json_line, headers=json_headers)
-        elif msgType == "image"
+    elif msgType == "image":
         try:
             message_content = line_bot_api.get_message_content(event['message']['id'])
             i = Image.open(BytesIO(message_content.content))
@@ -198,5 +198,5 @@ def event_handle(event,json_line):
         line_bot_api.reply_message(rtoken, replyObj)
     return ''
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run()
